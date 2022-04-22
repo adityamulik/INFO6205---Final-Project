@@ -1,39 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import Board from './Board';
-import { calculateWinner } from '../utility/calculateWinner';
+import { calculateWinner, reset_menace } from '../utility/calculateWinner';
+import Trends from './Trends';
 
 const Game = () => {
 
+  const style = {
+    textAlign: "left",
+    alignItems: "left"
+  }
+
   const [board, setBoard] = useState(Array(9).fill(null));
   const [xIsNext, setXisNext] = useState(true);
-  const winner = calculateWinner(board);
+  // const winner = calculateWinner(board);
 
   const logs = useState([]);
 
   const handleClick = (i) => {
+    console.log(i);
     const boardCopy = [...board];
-    // If user click an occupied square or if game is won, return
-    if (winner || boardCopy[i]) return;
-    // Put an X or an O in the clicked square
+    // console.log(winner);
+    // // If user click an occupied square or if game is won, return
+    // if (winner || boardCopy[i]) return;
+    // // Put an X or an O in the clicked square
     boardCopy[i] = xIsNext ? "O" : "X";
-    setBoard(boardCopy);
+    // setBoard(boardCopy);
     setXisNext(!xIsNext);
   };
 
+  const replaceXnO = (board) => {
+    for (let i=0; i<board.length; i++) {
+      if (board[i] == 0) {
+        board[i] = null;
+      } else {
+        board[i] = 'O';
+      }
+    }
+  }
+
   useEffect(() => {
-    winner === "O" ? logs.push("MENACE wins") : logs.push("Human wins");
-    console.log(logs);
-  }, logs);
+    const boardNew = reset_menace("both");
+    const boardCopy = [...boardNew];
+    // replaceXnO(boardCopy);
+    setBoard(boardCopy);
+
+    // setBoard(newGameBoard);
+  }, []);
 
   return (
 
-    <div>
+    <div style={style}>
       <Board squares={board} onClick={handleClick}/>
       <div>
-        <p>
+        {/* <p>
           {winner ? "Winner: " + (winner === "O" ? "MENACE wins" : "Human wins") : "Next Player: " + (xIsNext ? "O" : "X")}
-        </p>
+        </p> */}
       </div>
+      <Trends />
     </div>
   )
 }
