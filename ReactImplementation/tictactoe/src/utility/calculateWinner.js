@@ -85,6 +85,13 @@ export const calculateWinner = squares => {
   return null;
 }
 
+export const getMenaceMove = (board) => {
+  
+  const newBoard = [...board]
+
+  return newBoard;
+}
+
 // Array Utility Functions
 
 const array_fill = (start,length,value) => {
@@ -104,7 +111,7 @@ const count = (arr, value) => {
 }
 
 // Game functions 
-const new_game = () => {
+export const new_game = () => {
   if(playagain){
       menace[1]["moves"] = []
       menace[2]["moves"] = []
@@ -113,7 +120,7 @@ const new_game = () => {
       // for(var i=0;i<9;i++){
       //     document.getElementById("pos"+i).innerHTML = "<form onsubmit='javascript:play_human("+i+");return false'><input type='submit' value=' '></form>"
       // }
-      play_menace();
+      // play_menace();      
   }    
 }
 
@@ -136,7 +143,7 @@ function opposite_result(r){
   return 3-r
 }
 
-const check_win = () =>{
+export const check_win = () =>{
   var who_wins = winner(board);
   // console.log("who wins bool ", who_wins);
   if(who_wins !== false){
@@ -154,9 +161,11 @@ const check_win = () =>{
       }
       do_win(who_wins)
       human_turn = false
+      return true;
   } else {
     console.log("Not won yet");
     // return board;
+    return false;
   }
 }
 
@@ -176,23 +185,30 @@ const do_win = (who_wins) => {
   // new_game();
 
   setTimeout(() => {
-    // new_game();
+    new_game();
   }, 10000);
 }
 
-const play_menace = () => {
+export const play_menace = () => {
   let where = get_menace_move(1);
 
   board[where] = 1;
 
-  check_win();
+  return board;
 
-  if(no_winner){
-    play_opponent();
-  }
+  // getMenaceMove(board);
+
+  // Return board state
+  // updateBoard();
+
+  // check_win();
+
+  // if(no_winner){
+  //   play_opponent();
+  // }
 };
 
-const play_opponent = () => {
+export const play_opponent = () => {
   let where = undefined;
   // Human
 
@@ -202,11 +218,16 @@ const play_opponent = () => {
 
   board[where] = 2;
 
-  check_win();
+  return board;
 
-  if(no_winner){
-    play_menace();
-  }
+  // Return board state
+  // updateBoard();
+
+  // check_win();
+
+  // if(no_winner){
+  //   play_menace();
+  // }
 };
 
 // Board Functions
@@ -420,3 +441,5 @@ export const reset_menace = (n) => {
 
   return board;
 }
+
+export const updateBoard = () => { return board };

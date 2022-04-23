@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Board from './Board';
-import { calculateWinner, reset_menace } from '../utility/calculateWinner';
+import { calculateWinner, reset_menace, updateBoard, getMenaceMove, play_opponent, play_menace, check_win, new_game } from '../utility/calculateWinner';
 import Trends from './Trends';
 
 const Game = () => {
@@ -12,12 +12,19 @@ const Game = () => {
 
   const [board, setBoard] = useState(Array(9).fill(null));
   const [xIsNext, setXisNext] = useState(true);
+  const [playMenace, setPlayMenace] = useState(false);
+  // const [playOpponent, setPlayOpponent] = useState(false);
+  // const [reset, setReset] = useState(true);
+  const [wins, setWin] = useState(0);
+  const [loss, setLoss] = useState(0);
+  const [draw, setDraw] = useState(0);
+  const menaceMove = getMenaceMove(board);
   // const winner = calculateWinner(board);
 
   const logs = useState([]);
 
   const handleClick = (i) => {
-    console.log(i);
+    // console.log(i);
     const boardCopy = [...board];
     // console.log(winner);
     // // If user click an occupied square or if game is won, return
@@ -30,8 +37,8 @@ const Game = () => {
 
   const replaceXnO = (board) => {
     for (let i=0; i<board.length; i++) {
-      if (board[i] == 0) {
-        board[i] = null;
+      if (board[i] == 2) {
+        board[i] = 'X';
       } else {
         board[i] = 'O';
       }
@@ -39,13 +46,52 @@ const Game = () => {
   }
 
   useEffect(() => {
-    const boardNew = reset_menace("both");
-    const boardCopy = [...boardNew];
-    // replaceXnO(boardCopy);
-    setBoard(boardCopy);
+    
+    const newBoard = updateBoard();
+    // console.log("Side effect");
+    setBoard(newBoard);
+  }, [board]);
 
-    // setBoard(newGameBoard);
-  }, []);
+  const triggerRandom = () => {
+    // const boardNew = reset_menace("both");
+    // const boardCopy = [...boardNew];
+    // replaceXnO(boardCopy);
+    // setBoard(boardCopy);
+
+    const boardNew = reset_menace("both");
+    setBoard(boardNew);
+
+    let reset = true;
+    let menacePlay = true;
+    let opponentPlay = false;
+
+    while (reset) {
+
+      if (menacePlay) {
+        const menaceBoardUpdate = play_menace();
+        setBoard(menaceBoardUpdate)
+        
+        menacePlay = false;
+        opponentPlay = true;
+
+        if (check_win()) {
+          reset = false;
+        } 
+      } 
+      
+      if (opponentPlay) {
+        const opponentBoardUpdate = play_opponent();
+        setBoard(opponentBoardUpdate)
+        
+        menacePlay = true;
+        opponentPlay = false;
+
+        if (check_win()) {
+          reset = false;
+        } 
+      }                  
+    }
+  }
 
   return (
 
@@ -56,6 +102,10 @@ const Game = () => {
           {winner ? "Winner: " + (winner === "O" ? "MENACE wins" : "Human wins") : "Next Player: " + (xIsNext ? "O" : "X")}
         </p> */}
       </div>
+      <button onClick={triggerRandom}>Random</button>
+      <p>Menace Wins {wins}</p>
+      <p>Human Wins {loss}</p>
+      <p>Draw {draw}</p>
       <Trends />
     </div>
   )
