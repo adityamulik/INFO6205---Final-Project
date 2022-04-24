@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Board from './Board';
-import { calculateWinner, reset_menace, updateBoard, getMenaceMove, play_opponent, play_menace, check_win, new_game } from '../utility/calculateWinner';
+import { calculateWinner, reset_menace, updateBoard, getMenaceMove, play_opponent, play_menace, check_win, new_game } from '../engine/menace';
 import Trends from './Trends';
 
 const Game = () => {
@@ -152,7 +152,7 @@ const Game = () => {
 
     setCustomArray(custom => [...custom, {name: gameCounter, uv: beadsCount, pv: 2400, amt: 2400}]);
 
-    console.log(custom);
+    console.log("Trends Array", custom);
   }
 
   return (

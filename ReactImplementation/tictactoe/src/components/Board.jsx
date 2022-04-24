@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Square from './Square';
-import { calculateWinner } from '../utility/calculateWinner';
+import { calculateWinner } from '../engine/menace';
 
 const Board = ({ squares, onClick }) => {
 
