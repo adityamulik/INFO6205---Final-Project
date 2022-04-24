@@ -1,4 +1,4 @@
-let menace = {
+export let menace = {
   1:{
      "boxes":{},
      "orderedBoxes":[], // 
@@ -221,7 +221,7 @@ export const play_menace = () => {
 export const play_opponent = () => {
   let where = undefined;
   // Human
-
+  
   // Random
   human_turn = false
   where = get_random_move();
@@ -239,6 +239,19 @@ export const play_opponent = () => {
   //   play_menace();
   // }
 };
+
+export const play_human = (where) => {
+  if(no_winner){
+      human_turn = false
+      board[where] = 2
+      // document.getElementById("pos"+where).innerHTML = pieces[2]
+      // check_win()
+      // if(no_winner){
+      //     play_menace()
+      // }
+  }
+  return board;
+}
 
 // Board Functions
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Board from './Board';
-import { calculateWinner, reset_menace, updateBoard, getMenaceMove, play_opponent, play_menace, check_win, new_game } from '../engine/menace';
+import { play_human, menace, calculateWinner, reset_menace, updateBoard, getMenaceMove, play_opponent, play_menace, check_win, new_game } from '../engine/menace';
 import Trends from './Trends';
 
 const Game = () => {
@@ -13,6 +13,7 @@ const Game = () => {
   let btnCount = 0;
 
   const [board, setBoard] = useState(Array(9).fill(null));
+  const [boardNew, setBoardNew] = useState(Array(9).fill(null));
   const [xIsNext, setXisNext] = useState(true);
   const [playMenace, setPlayMenace] = useState(false);
   // const [playOpponent, setPlayOpponent] = useState(false);
@@ -26,6 +27,8 @@ const Game = () => {
 
   // const winner = calculateWinner(board);
   const [custom, setCustomArray] = useState([]);
+
+  const menaceT = menace;
 
   const logs = useState([]);
 
@@ -43,9 +46,9 @@ const Game = () => {
 
   const replaceXnO = (board) => {
     for (let i=0; i<board.length; i++) {
-      if (board[i] == 2) {
+      if (board[i] === 2) {
         board[i] = 'X';
-      } else if (board[i] == 1) {
+      } else if (board[i] === 1) {
         board[i] = 'O';
       } else {
         board[i] = null;
@@ -54,6 +57,8 @@ const Game = () => {
   }
 
   useEffect(() => {
+
+    // console.log(menaceT);
     
     // console.log("Games count:", gameCounter);
     // console.log("Beads count: ", beadsCount);
@@ -63,77 +68,77 @@ const Game = () => {
     // setBoard(newBoard);
   }, [board]);
 
-  const triggerRandom = () => {
+  const triggerHuman = async () => {
+    const boardNew = reset_menace("both");
+    let reset = true;
+    let menacePlay = true;
+    let opponentPlay = false;
 
-    if (btnCount == 100) {
-      
+    if (reset) {
+      if (menacePlay) {
+        let menaceBoardUpdate = play_menace();
+        replaceXnO(menaceBoardUpdate);
+        setBoard(menaceBoardUpdate);        
+        menacePlay = false;
+        opponentPlay = true;
+      }
     }
-    // const boardNew = reset_menace("both");
-    // const boardCopy = [...boardNew];
-    // replaceXnO(boardCopy);
-    // setBoard(boardCopy);
+  }
+
+  const triggerRandom = async () => {
 
     const boardNew = reset_menace("both");
-    // setBoard(boardNew);
 
     let reset = true;
     let menacePlay = true;
     let opponentPlay = false;
 
-    // const menaceBoardUpdate = play_menace();
-    // setBoard(menaceBoardUpdate);
-
     while (reset) {
 
       if (menacePlay) {
-        let menaceBoardUpdate = play_menace();
-        // menaceBoardUpdate = replaceXnO(menaceBoardUpdate);
-        setBoard(menaceBoardUpdate);        
+        let menaceBoardUpdate = play_menace();        
+        let newArr = [...menaceBoardUpdate];
+        replaceXnO(newArr)
+        // console.log("MEANCE PLAYS", newArr);
+        setBoard(newArr);        
         menacePlay = false;
         opponentPlay = true;
 
         const winStatus = check_win();
-        console.log(winStatus);
+        // console.log(winStatus);
 
         if (winStatus[1]) {
-    //       // setBoard(Array(9).fill(null));
           reset = false;
           opponentPlay = false;
-    //       const resetBoard = new_game();
-    //       // setBoard(resetBoard);
 
           if (winStatus[0] === 0) {
             setDraw(draw + 1);
-            setBeadsCount(beadsCount + 1);
+            await setBeadsCount(beadsCount + 1);
           } else if (winStatus[0] === 1) {
             setWin(wins + 1);
-            setBeadsCount(beadsCount + 3);
+            await setBeadsCount(beadsCount + 3);
           } else { 
             setLoss(loss + 1);
-            setBeadsCount(beadsCount - 1);
           }
         } 
       } 
 
-    //   // reset = true;
-      
       if (opponentPlay) {        
         let opponentBoardUpdate = play_opponent();
-        // opponentBoardUpdate = replaceXnO(opponentBoardUpdate);
-        setBoard(opponentBoardUpdate)
+        let newArr = [...opponentBoardUpdate];
+        replaceXnO(newArr);
+        setBoard(newArr);   
         
         menacePlay = true;
         opponentPlay = false;
 
         const winStatus = check_win();
-        console.log(winStatus);
+        // console.log(winStatus);
 
         if (winStatus[1]) {
-    //       // setBoard(Array(9).fill(null));
+
           reset = false;
           menacePlay = false;
-    //       const resetBoard = new_game();
-    //       // setBoard(resetBoard);
 
           if (winStatus[0] === 0) {
             setDraw(draw + 1);
@@ -141,18 +146,20 @@ const Game = () => {
             setWin(wins + 1);
           } else {
             setLoss(loss + 1);
-            setBeadsCount(beadsCount - 1);
+            await setBeadsCount(beadsCount - 1);
           }
         } 
       }              
-      setGameCounter(gameCounter + 1);
+      await setGameCounter(gameCounter + 1);
+
+      // console.log(menaceT);
     }
 
     custom.push({name: gameCounter, uv: beadsCount, pv: 2400, amt: 2400})
 
     setCustomArray(custom => [...custom, {name: gameCounter, uv: beadsCount, pv: 2400, amt: 2400}]);
 
-    console.log("Trends Array", custom);
+    // console.log("Trends Array", custom);
   }
 
   return (
@@ -164,6 +171,7 @@ const Game = () => {
           {winner ? "Winner: " + (winner === "O" ? "MENACE wins" : "Human wins") : "Next Player: " + (xIsNext ? "O" : "X")}
         </p> */}
       </div>
+      <button onClick={triggerHuman}>Human</button>
       <button onClick={triggerRandom}>Random</button>
       <p>Total Games {gameCounter}</p>
       <p>Menace Wins {wins}</p>
