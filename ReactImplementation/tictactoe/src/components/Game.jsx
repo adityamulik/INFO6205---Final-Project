@@ -47,9 +47,9 @@ const Game = () => {
 
   useEffect(() => {
     
-    const newBoard = updateBoard();
+    // const newBoard = updateBoard();
     // console.log("Side effect");
-    setBoard(newBoard);
+    // setBoard(newBoard);
   }, [board]);
 
   const triggerRandom = () => {
@@ -59,35 +59,70 @@ const Game = () => {
     // setBoard(boardCopy);
 
     const boardNew = reset_menace("both");
-    setBoard(boardNew);
+    // setBoard(boardNew);
 
     let reset = true;
     let menacePlay = true;
     let opponentPlay = false;
 
+    // const menaceBoardUpdate = play_menace();
+    // setBoard(menaceBoardUpdate);
+
     while (reset) {
 
       if (menacePlay) {
         const menaceBoardUpdate = play_menace();
-        setBoard(menaceBoardUpdate)
-        
+    //     // console.log(menaceBoardUpdate);
+        setBoard(menaceBoardUpdate);        
         menacePlay = false;
         opponentPlay = true;
 
-        if (check_win()) {
+        const winStatus = check_win();
+        console.log(winStatus);
+
+        if (winStatus[1]) {
+    //       // setBoard(Array(9).fill(null));
           reset = false;
+          opponentPlay = false;
+    //       const resetBoard = new_game();
+    //       // setBoard(resetBoard);
+
+          if (winStatus[0] === 0) {
+            setDraw(draw + 1);
+          } else if (winStatus[0] === 1) {
+            setWin(wins + 1);
+          } else {
+            setLoss(loss + 1);
+          }
         } 
       } 
+
+    //   // reset = true;
       
-      if (opponentPlay) {
+      if (opponentPlay) {        
         const opponentBoardUpdate = play_opponent();
         setBoard(opponentBoardUpdate)
         
         menacePlay = true;
         opponentPlay = false;
 
-        if (check_win()) {
+        const winStatus = check_win();
+        console.log(winStatus);
+
+        if (winStatus[1]) {
+    //       // setBoard(Array(9).fill(null));
           reset = false;
+          menacePlay = false;
+    //       const resetBoard = new_game();
+    //       // setBoard(resetBoard);
+
+          if (winStatus[0] === 0) {
+            setDraw(draw + 1);
+          } else if (winStatus[0] === 1) {
+            setWin(wins + 1);
+          } else {
+            setLoss(loss + 1);
+          }
         } 
       }                  
     }

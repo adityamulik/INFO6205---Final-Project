@@ -122,6 +122,7 @@ export const new_game = () => {
       // }
       // play_menace();      
   }    
+  return board;
 }
 
 function winner(b){
@@ -144,24 +145,31 @@ function opposite_result(r){
 }
 
 export const check_win = () =>{
-  var who_wins = winner(board);
+  let who_wins = winner(board);
+  let message = [];
   // console.log("who wins bool ", who_wins);
   if(who_wins !== false){
       if(who_wins == 0){
         console.log("It's a draw.")
+        message.push(0);
+        message.push(true);
         // return board;
       }
       if(who_wins == 1){
         console.log("MENACE wins.")
+        message.push(1);
+        message.push(true);
         // return board;
       }
       if(who_wins == 2){
         console.log(whoA[player]+" wins.")
+        message.push(2);
+        message.push(true);
         // return board;
       }
       do_win(who_wins)
-      human_turn = false
-      return true;
+      // human_turn = false
+      return message;
   } else {
     console.log("Not won yet");
     // return board;
@@ -170,12 +178,14 @@ export const check_win = () =>{
 }
 
 const do_win = (who_wins) => {
-  no_winner = false
+  // no_winner = false
   // for(var i=0;i<9;i++){
   //     if(board[i] == 0){
   //         document.getElementById("pos"+i).innerHTML = ""
   //     }
   // }
+  console.log("Adding new beads");
+  // console.log(who_wins);
   menace_add_beads(who_wins)
   // if(player == "h"){
       // window.setTimeout(new_game, 1000);
@@ -184,9 +194,9 @@ const do_win = (who_wins) => {
   // }
   // new_game();
 
-  setTimeout(() => {
-    new_game();
-  }, 10000);
+  // setTimeout(() => {
+  //   new_game();
+  // }, 10000);
 }
 
 export const play_menace = () => {
@@ -400,7 +410,15 @@ function menace_add_beads(result){
           box_add(menace[2]["moves"][i][0],menace[2]["moves"][i][1],menace[2]["incentives"][opposite_result(result)],2)
       }
   }
-  // update_totals(result)
+  update_totals(result)
+}
+
+// UI functions
+function update_totals(n){
+  // plotdata.push(plotdata[plotdata.length-1]+menace[1]["incentives"][n])
+  wins_each[n] += 1
+  // document.getElementById("dis"+n).innerHTML = wins_each[n]
+  // update_plot()
 }
 
 // Game Reset and new game
