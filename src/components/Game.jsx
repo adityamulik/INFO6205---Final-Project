@@ -6,6 +6,8 @@ import Trends from './Trends';
 
 const Game = () => {
 
+  // Custom Logger
+
   const style = {
     textAlign: "left",
     alignItems: "left"
@@ -18,7 +20,7 @@ const Game = () => {
   const [xIsNext, setXisNext] = useState(true);
   const [playMenace, setPlayMenace] = useState(false);
   // const [playOpponent, setPlayOpponent] = useState(false);
-  // const [reset, setReset] = useState(true);
+  const [resetMenaceHumanBool, setResetMenaceHumanBool] = useState(false);
   const [wins, setWin] = useState(0);
   const [loss, setLoss] = useState(0);
   const [draw, setDraw] = useState(0);
@@ -35,17 +37,7 @@ const Game = () => {
 
   const logs = useState([]);
 
-  const handleClick = (i) => {
-    // console.log(i);
-    const boardCopy = [...board];
-    // console.log(winner);
-    // // If user click an occupied square or if game is won, return
-    // if (winner || boardCopy[i]) return;
-    // // Put an X or an O in the clicked square
-    boardCopy[i] = xIsNext ? "O" : "X";
-    // setBoard(boardCopy);
-    setXisNext(!xIsNext);
-  };
+  // Helper Function
 
   const replaceXnO = (board) => {
     for (let i=0; i<board.length; i++) {
@@ -59,6 +51,19 @@ const Game = () => {
     }
   }
 
+  const replaceXnOReverse = (board) => {
+    for (let i=0; i<board.length; i++) {
+      if (board[i] === 'X') {
+        board[i] = 2;
+      } else if (board[i] === 'O') {
+        board[i] = 1;
+      } else {
+        board[i] = 0;
+      }
+    }
+  }
+
+  // State update
   useEffect(() => {
 
     // console.log(menaceT);
@@ -71,11 +76,55 @@ const Game = () => {
     // setBoard(newBoard);
   }, [board]);
 
+  const handleClick = (i) => {
+    // console.log(i);
+    // while (!check_win()) {
+      console.log("CHECK WINNNNN ", check_win());
+      const boardCopy = [...board];
+      // console.log("BOARDDDD", board);
+      boardCopy[i] = 'X';
+      if (xIsNext) {
+        setBoard(boardCopy);
+        setXisNext(false);
+      }
+
+      if (!xIsNext) {
+        console.log("Click");
+        const boardCopyMenace = play_menace();
+        console.log("Board new menace", boardCopyMenace);
+      }
+      // const boardHumanUpdated = play_human(i);
+      // console.log("Returned board", boardHumanUpdated);
+
+      // console.log(boardCopy);
+    // }
+    
+    
+    // replaceXnOReverse(boardCopy);
+    // console.log(boardCopy);
+    // // If user click an occupied square or if game is won, return
+    // if (winner || boardCopy[i]) return;
+    // // Put an X or an O in the clicked square
+    // boardCopy[i] = xIsNext ? "O" : "X";
+    // setBoard(boardCopy);
+    // setXisNext(!xIsNext);
+  };    
+
   const triggerHuman = async () => {
-    const boardNew = reset_menace("both");
+
+    if (!resetMenaceHumanBool) {
+      const boardNew = reset_menace("both");
+      setResetMenaceHumanBool(true);
+      console.log("Reset Done in Human Mode");
+    }    
+
+    if (resetMenaceHumanBool) {
+      new_game();
+    }
+
     let reset = true;
     let menacePlay = true;
-    let opponentPlay = false;
+    // let opponentPlay = false;
 
     if (reset) {
       if (menacePlay) {
@@ -83,7 +132,7 @@ const Game = () => {
         replaceXnO(menaceBoardUpdate);
         setBoard(menaceBoardUpdate);        
         menacePlay = false;
-        opponentPlay = true;
+        // opponentPlay = true;
       }
     }
   }
