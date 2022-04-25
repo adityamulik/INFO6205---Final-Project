@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Logger from 'js-logger';
 import Board from './Board';
 import { play_human, menace, calculateWinner, reset_menace, updateBoard, getMenaceMove, play_opponent, play_menace, check_win, new_game } from '../engine/menace';
 import Trends from './Trends';
@@ -30,6 +31,7 @@ const Game = () => {
   const [custom, setCustomArray] = useState([]);
 
   const menaceT = menace;
+  console.log(menaceT);
 
   const logs = useState([]);
 
@@ -86,7 +88,7 @@ const Game = () => {
     }
   }
 
-  const triggerRandom = async () => {
+  const triggerRandom = () => {
 
     if (!meanceResetBool) {
       const boardNew = reset_menace("both");
@@ -105,11 +107,13 @@ const Game = () => {
     while (reset) {
 
       if (menacePlay) {
+      
         let menaceBoardUpdate = play_menace();                        
         let newArr = [...menaceBoardUpdate];
         replaceXnO(newArr)
         // console.log("MEANCE PLAYS", newArr);
-        setBoard(newArr);        
+                     
+        setBoard(newArr);
         menacePlay = false;
         opponentPlay = true;
 
@@ -122,21 +126,24 @@ const Game = () => {
 
           if (winStatus[0] === 0) {
             setDraw(draw + 1);
-            await setBeadsCount(beadsCount + 1);
+            Logger.info(`Game has drawn at ${gameCounter} game`);
+            setBeadsCount(beadsCount + 1);
+            setCustomArray(custom => [...custom, {name: gameCounter + 1, uv: beadsCount + 1, pv: 2400, amt: 2400}]);
           } else if (winStatus[0] === 1) {
             setWin(wins + 1);
-            await setBeadsCount(beadsCount + 3);
+            Logger.info(`Menace has won at ${gameCounter} game`);
+            setBeadsCount(beadsCount + 3);
+            setCustomArray(custom => [...custom, {name: gameCounter + 1, uv: beadsCount + 3, pv: 2400, amt: 2400}]);
           } else { 
+            Logger.info(`Human has won at ${gameCounter} game`);
             setLoss(loss + 1);
           }
-        } 
-      } 
-
-      if (opponentPlay) {        
+        }             
+      } else if (opponentPlay) {        
         let opponentBoardUpdate = play_opponent();
         let newArr = [...opponentBoardUpdate];
-        replaceXnO(newArr);
-        setBoard(newArr);   
+        replaceXnO(newArr);             
+        setBoard(newArr)  
         
         menacePlay = true;
         opponentPlay = false;
@@ -151,22 +158,25 @@ const Game = () => {
 
           if (winStatus[0] === 0) {
             setDraw(draw + 1);
+            Logger.info(`Game has drawn at ${gameCounter} game`);
           } else if (winStatus[0] === 1) {
             setWin(wins + 1);
+            Logger.info(`Menace has won at ${gameCounter} game`);
           } else {
             setLoss(loss + 1);
-            await setBeadsCount(beadsCount - 1);
+            Logger.info(`Human has won at ${gameCounter} game`);
+            setBeadsCount(beadsCount - 1);
+            setCustomArray(custom => [...custom, {name: gameCounter + 1, uv: beadsCount - 1, pv: 2400, amt: 2400}]);
           }
         } 
-      }              
-      await setGameCounter(gameCounter + 1);
+      }            
 
-      // console.log(menaceT);
+      setGameCounter(gameCounter + 1);
     }
 
-    custom.push({name: gameCounter, uv: beadsCount, pv: 2400, amt: 2400})
+    // custom.push({name: gameCounter, uv: beadsCount, pv: 2400, amt: 2400})
 
-    setCustomArray(custom => [...custom, {name: gameCounter, uv: beadsCount, pv: 2400, amt: 2400}]);
+    // setCustomArray(custom => [...custom, {name: gameCounter + 1, uv: beadsCount, pv: 2400, amt: 2400}]);
 
     // console.log("Trends Array", custom);
   }
