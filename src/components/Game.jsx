@@ -84,12 +84,12 @@ const Game = () => {
       // console.log("BOARDDDD", board);
       // boardCopy[i] = 'X';
       boardCopy[i] = 2;
-      setBoard(boardCopy);
+      // setBoard(boardCopy);
       setXisNext(false);
 
       console.log("Click");
       const boardCopyMenace = play_menace();
-      setBoard(boardCopyMenace);
+      // setBoard(boardCopyMenace);
       console.log("Board new menace", boardCopyMenace);
   };    
 
@@ -218,7 +218,7 @@ const Game = () => {
   return (
 
     <div style={style}>
-      <Board squares={board} onClick={handleClick}/>
+      <Board squares={board} onClick={handleClick} />
       <div>
         {/* <p>
           {winner ? "Winner: " + (winner === "O" ? "MENACE wins" : "Human wins") : "Next Player: " + (xIsNext ? "O" : "X")}
