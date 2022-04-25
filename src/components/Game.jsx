@@ -82,32 +82,15 @@ const Game = () => {
       console.log("CHECK WINNNNN ", check_win());
       const boardCopy = [...board];
       // console.log("BOARDDDD", board);
-      boardCopy[i] = 'X';
-      if (xIsNext) {
-        setBoard(boardCopy);
-        setXisNext(false);
-      }
+      // boardCopy[i] = 'X';
+      boardCopy[i] = 2;
+      setBoard(boardCopy);
+      setXisNext(false);
 
-      if (!xIsNext) {
-        console.log("Click");
-        const boardCopyMenace = play_menace();
-        console.log("Board new menace", boardCopyMenace);
-      }
-      // const boardHumanUpdated = play_human(i);
-      // console.log("Returned board", boardHumanUpdated);
-
-      // console.log(boardCopy);
-    // }
-    
-    
-    // replaceXnOReverse(boardCopy);
-    // console.log(boardCopy);
-    // // If user click an occupied square or if game is won, return
-    // if (winner || boardCopy[i]) return;
-    // // Put an X or an O in the clicked square
-    // boardCopy[i] = xIsNext ? "O" : "X";
-    // setBoard(boardCopy);
-    // setXisNext(!xIsNext);
+      console.log("Click");
+      const boardCopyMenace = play_menace();
+      setBoard(boardCopyMenace);
+      console.log("Board new menace", boardCopyMenace);
   };    
 
   const triggerHuman = async () => {
@@ -118,7 +101,8 @@ const Game = () => {
       console.log("Reset Done in Human Mode");
     }    
 
-    if (resetMenaceHumanBool) {
+    if (!resetMenaceHumanBool) {
+      console.log("New game begins");
       new_game();
     }
 
@@ -129,7 +113,7 @@ const Game = () => {
     if (reset) {
       if (menacePlay) {
         let menaceBoardUpdate = play_menace();
-        replaceXnO(menaceBoardUpdate);
+        // replaceXnO(menaceBoardUpdate);
         setBoard(menaceBoardUpdate);        
         menacePlay = false;
         // opponentPlay = true;
@@ -137,7 +121,7 @@ const Game = () => {
     }
   }
 
-  const triggerRandom = () => {
+  const triggerRandom = async () => {
 
     if (!meanceResetBool) {
       const boardNew = reset_menace("both");
@@ -162,7 +146,7 @@ const Game = () => {
         replaceXnO(newArr)
         // console.log("MEANCE PLAYS", newArr);
                      
-        setBoard(newArr);
+        await setBoard(newArr);
         menacePlay = false;
         opponentPlay = true;
 
@@ -188,11 +172,12 @@ const Game = () => {
             setLoss(loss + 1);
           }
         }             
-      } else if (opponentPlay) {        
+      } 
+      else if (opponentPlay) {       
         let opponentBoardUpdate = play_opponent();
         let newArr = [...opponentBoardUpdate];
         replaceXnO(newArr);             
-        setBoard(newArr)  
+        await setBoard(newArr)  
         
         menacePlay = true;
         opponentPlay = false;
@@ -239,7 +224,7 @@ const Game = () => {
           {winner ? "Winner: " + (winner === "O" ? "MENACE wins" : "Human wins") : "Next Player: " + (xIsNext ? "O" : "X")}
         </p> */}
       </div>
-      <button onClick={triggerHuman}>Human</button>
+      {/* <button onClick={triggerHuman}>Human</button> */}
       <button onClick={triggerRandom}>Random</button>
       <div style={{display: "flex"}}>
         <div>
