@@ -23,6 +23,7 @@ const Game = () => {
   const [draw, setDraw] = useState(0);
   const [gameCounter, setGameCounter] = useState(0);
   const [beadsCount, setBeadsCount] = useState(0);
+  const [meanceResetBool, setMenaceResetBool] = useState(false);
   const menaceMove = getMenaceMove(board);
 
   // const winner = calculateWinner(board);
@@ -87,16 +88,24 @@ const Game = () => {
 
   const triggerRandom = async () => {
 
-    const boardNew = reset_menace("both");
+    if (!meanceResetBool) {
+      const boardNew = reset_menace("both");
+      setMenaceResetBool(true);
+      console.log("Reset Done");
+    }    
+
+    if (meanceResetBool) {
+      new_game();
+    }
 
     let reset = true;
     let menacePlay = true;
-    let opponentPlay = false;
+    let opponentPlay = false;    
 
     while (reset) {
 
       if (menacePlay) {
-        let menaceBoardUpdate = play_menace();        
+        let menaceBoardUpdate = play_menace();                        
         let newArr = [...menaceBoardUpdate];
         replaceXnO(newArr)
         // console.log("MEANCE PLAYS", newArr);
@@ -173,11 +182,15 @@ const Game = () => {
       </div>
       <button onClick={triggerHuman}>Human</button>
       <button onClick={triggerRandom}>Random</button>
-      <p>Total Games {gameCounter}</p>
-      <p>Menace Wins {wins}</p>
-      <p>Human Wins {loss}</p>
-      <p>Draw {draw}</p>
-      <Trends customCount={custom} />
+      <div style={{display: "flex"}}>
+        <div>
+          <p>Total Games {gameCounter}</p>
+          <p>Menace Wins {wins}</p>
+          <p>Human Wins {loss}</p>
+          <p>Draw {draw}</p>
+        </div>       
+        <Trends customCount={custom} />
+      </div>
     </div>
   )
 }
