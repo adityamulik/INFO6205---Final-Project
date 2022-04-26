@@ -1,3 +1,4 @@
+
 export let menace = {
   1:{
      "boxes":{},
@@ -150,19 +151,19 @@ export const check_win = () =>{
   // console.log("who wins bool ", who_wins);
   if(who_wins !== false){
       if(who_wins == 0){
-        console.log("It's a draw.")
+        console.log(`INFO: It's a draw at ${new Date()}`);
         message.push(0);
         message.push(true);
         // return board;
       }
       if(who_wins == 1){
-        console.log("MENACE wins.")
+        console.log(`INFO: MEANCE won at ${new Date()}`);
         message.push(1);
         message.push(true);
         // return board;
       }
       if(who_wins == 2){
-        console.log(whoA[player]+" wins.")
+        console.log(`INFO: MEANCE lost & Opponent won at ${new Date()}`);
         message.push(2);
         message.push(true);
         // return board;
@@ -171,7 +172,7 @@ export const check_win = () =>{
       // human_turn = false
       return message;
   } else {
-    console.log("Not won yet");
+    // console.log("Not won yet");
     // return board;
     return false;
   }
@@ -184,7 +185,7 @@ const do_win = (who_wins) => {
   //         document.getElementById("pos"+i).innerHTML = ""
   //     }
   // }
-  console.log("Adding new beads");
+  // console.log("Adding new beads");
   // console.log(who_wins);
   menace_add_beads(who_wins)
   // if(player == "h"){
@@ -203,6 +204,8 @@ export const play_menace = () => {
   let where = get_menace_move(1);
 
   board[where] = 1;
+
+  console.log(`INFO: MENACE played it's move (O) at position ${where} on the board at ${new Date()}`);
 
   return board;
 
@@ -227,6 +230,8 @@ export const play_opponent = () => {
   where = get_random_move();
 
   board[where] = 2;
+
+  console.log(`INFO: Opponent played it's move (X) at position ${where} on the board at ${new Date()}`);
 
   return board;
 

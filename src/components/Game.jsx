@@ -6,8 +6,6 @@ import Trends from './Trends';
 
 const Game = () => {
 
-  // Custom Logger
-
   const style = {
     textAlign: "left",
     alignItems: "left"
@@ -33,7 +31,7 @@ const Game = () => {
   const [custom, setCustomArray] = useState([]);
 
   const menaceT = menace;
-  console.log(menaceT);
+  // console.log(menaceT);
 
   const logs = useState([]);
 
@@ -79,7 +77,7 @@ const Game = () => {
   const handleClick = (i) => {
     // console.log(i);
     // while (!check_win()) {
-      console.log("CHECK WINNNNN ", check_win());
+      // console.log("CHECK WINNNNN ", check_win());
       const boardCopy = [...board];
       // console.log("BOARDDDD", board);
       // boardCopy[i] = 'X';
@@ -87,10 +85,10 @@ const Game = () => {
       // setBoard(boardCopy);
       setXisNext(false);
 
-      console.log("Click");
+      // console.log("Click");
       const boardCopyMenace = play_menace();
       // setBoard(boardCopyMenace);
-      console.log("Board new menace", boardCopyMenace);
+      // console.log("Board new menace", boardCopyMenace);
   };    
 
   const triggerHuman = async () => {
@@ -98,11 +96,11 @@ const Game = () => {
     if (!resetMenaceHumanBool) {
       const boardNew = reset_menace("both");
       setResetMenaceHumanBool(true);
-      console.log("Reset Done in Human Mode");
+      // console.log("Reset Done in Human Mode");
     }    
 
     if (!resetMenaceHumanBool) {
-      console.log("New game begins");
+      // console.log("New game begins");
       new_game();
     }
 
@@ -126,7 +124,7 @@ const Game = () => {
     if (!meanceResetBool) {
       const boardNew = reset_menace("both");
       setMenaceResetBool(true);
-      console.log("Reset Done");
+      // console.log("Reset Done");
     }    
 
     if (meanceResetBool) {
@@ -224,7 +222,7 @@ const Game = () => {
           {winner ? "Winner: " + (winner === "O" ? "MENACE wins" : "Human wins") : "Next Player: " + (xIsNext ? "O" : "X")}
         </p> */}
       </div>
-      {/* <button onClick={triggerHuman}>Human</button> */}
+      <button onClick={triggerHuman}>Human</button>
       <button onClick={triggerRandom}>Random</button>
       <div style={{display: "flex"}}>
         <div>
