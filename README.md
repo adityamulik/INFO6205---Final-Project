@@ -25,7 +25,8 @@
 How to check logs?
 Just open the browser console (Command + Option + J for Mac & Control + Shift + I for Windows)
 
-Project built under the mentorship of **_Professor Robin Hillyards_** in the class INFO6205 - Program, Structures & Algorithms taught in **College of Engineering, Northeastern University**.
+
+>Project built under the mentorship of **_Professor Robin Hillyards_** in the class INFO6205 - Program, Structures & Algorithms taught in **College of Engineering, Northeastern University**.
 
 ## Team Members
 
