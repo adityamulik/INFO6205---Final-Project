@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Logger from 'js-logger';
 import Board from './Board';
-import { play_human, menace, calculateWinner, reset_menace, updateBoard, getMenaceMove, play_opponent, play_menace, check_win, new_game } from '../engine/menace';
+import { play_human, menace, calculateWinner, reset_menace, updateBoard, getMenaceMove, play_opponent, play_menace, check_win, new_game, get_perfect_move } from '../engine/menace';
 import Trends from './Trends';
 
 const Game = () => {
@@ -157,19 +156,19 @@ const Game = () => {
 
           if (winStatus[0] === 0) {
             setDraw(draw + 1);
-            Logger.info(`Game has drawn at ${gameCounter} game`);
+            // Logger.info(`Game has drawn at ${gameCounter} game`);
             setBeadsCount(beadsCount + 1);
             setCustomArray(custom => [...custom, {name: gameCounter + 1, uv: beadsCount + 1, pv: 2400, amt: 2400}]);
           } else if (winStatus[0] === 1) {
             setWin(wins + 1);
-            Logger.info(`Menace has won at ${gameCounter} game`);
+            // Logger.info(`Menace has won at ${gameCounter} game`);
             setBeadsCount(beadsCount + 3);
             setCustomArray(custom => [...custom, {name: gameCounter + 1, uv: beadsCount + 3, pv: 2400, amt: 2400}]);
           } else { 
-            Logger.info(`Human has won at ${gameCounter} game`);
+            // Logger.info(`Human has won at ${gameCounter} game`);
             setLoss(loss + 1);
           }
-        }             
+        }         
       } 
       else if (opponentPlay) {       
         let opponentBoardUpdate = play_opponent();
@@ -190,13 +189,13 @@ const Game = () => {
 
           if (winStatus[0] === 0) {
             setDraw(draw + 1);
-            Logger.info(`Game has drawn at ${gameCounter} game`);
+            // Logger.info(`Game has drawn at ${gameCounter} game`);
           } else if (winStatus[0] === 1) {
             setWin(wins + 1);
-            Logger.info(`Menace has won at ${gameCounter} game`);
+            // Logger.info(`Menace has won at ${gameCounter} game`);
           } else {
             setLoss(loss + 1);
-            Logger.info(`Human has won at ${gameCounter} game`);
+            // Logger.info(`Human has won at ${gameCounter} game`);
             setBeadsCount(beadsCount - 1);
             setCustomArray(custom => [...custom, {name: gameCounter + 1, uv: beadsCount - 1, pv: 2400, amt: 2400}]);
           }
