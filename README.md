@@ -8,7 +8,7 @@
 3. Any latest browser
 4. Command Prompt or Terminal
 
-Steps:
+### Steps:
 * Open terminal on your system.   
 * Change directory to where you need to install the application.      
 * Type _git clone https://github.com/adityamulik/INFO6205---Final-Project---TicTacToe.git_.   
@@ -17,11 +17,16 @@ Steps:
 * Type _npm start_.   
 * Open the url **_http://localhost:3000_** on any browser to access the application.   
 
-Demo:
+### Demo:
 
 > https://menace-neu.netlify.app/
 
-Project built under the mentorship of **_Professor Robin Hillyards_** in the class INFO6205 - Program, Structures & Algorithms taught in **College of Engineering, Northeastern University**.
+### Logging:
+How to check logs?
+Just open the browser console (Command + Option + J for Mac & Control + Shift + I for Windows)
+
+
+>Project built under the mentorship of **_Professor Robin Hillyards_** in the class INFO6205 - Program, Structures & Algorithms taught in **College of Engineering, Northeastern University**.
 
 ## Team Members
 
