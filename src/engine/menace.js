@@ -207,6 +207,8 @@ export const play_menace = () => {
 
   console.log(`INFO: MENACE played it's move (O) at position ${where} on the board at ${new Date()}`);
 
+  setTimeout(() => {}, 2000);
+
   return board;
 
   // getMenaceMove(board);
@@ -229,9 +231,14 @@ export const play_opponent = () => {
   human_turn = false
   where = get_random_move();
 
+  // Perfect
+  // where = get_perfect_move();
+
   board[where] = 2;
 
   console.log(`INFO: Opponent played it's move (X) at position ${where} on the board at ${new Date()}`);
+
+  setTimeout(() => {}, 2000);
 
   return board;
 
@@ -332,6 +339,55 @@ const get_random_move = () => {
     }
   }
   return choices[Math.floor(Math.random()*choices.length)];
+}
+
+export function get_perfect_move(){
+
+  return minimax(board,2).index;
+}
+
+function minimax(newboard, player) {
+  var who_wins = winner(newboard)
+  if(who_wins!==false){
+      if(who_wins == 1){
+          return { score: -(10 + count(newboard,0)) }
+      } else if(who_wins == 2){
+          return { score: 10 + count(newboard,0) }
+      } else if(who_wins == 0){
+          return { score: 0 }
+      }
+  }
+  var choices = []
+  for(var i=0;i<9;i++){
+      if(newboard[i] == 0){
+          choices.push(i)
+      }
+  }
+  var moves = []
+  for(var i=0;i<choices.length;i++){
+      var move = {}
+      move.index = choices[i]
+      newboard[choices[i]] = player
+      let result = minimax(newboard, 3-player)
+      move.score = result.score
+      newboard[choices[i]] = 0
+      moves.push(move)
+  }
+  var bestMove = 0
+  var bestScore = player == 1 ? 1000 : -1000
+  for(var i=0;i<moves.length;i++) {
+      if((player == 2 && moves[i].score > bestScore) || (player == 1 && moves[i].score < bestScore)) {
+          bestScore = moves[i].score
+          bestMove = i
+      }
+  }
+  var bestMoves = []
+  for(var i=0;i<moves.length;i++) {
+      if(moves[i].score == bestScore) {
+          bestMoves.push(i)
+      }
+  }
+  return moves[bestMoves[Math.floor(Math.random() * bestMoves.length)]]
 }
 
 // Menace Function

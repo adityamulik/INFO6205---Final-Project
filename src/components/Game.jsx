@@ -3,11 +3,28 @@ import Board from './Board';
 import { play_human, menace, calculateWinner, reset_menace, updateBoard, getMenaceMove, play_opponent, play_menace, check_win, new_game, get_perfect_move } from '../engine/menace';
 import Trends from './Trends';
 
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
+import { padding } from '@mui/system';
+
 const Game = () => {
 
-  const style = {
-    textAlign: "left",
-    alignItems: "left"
+  const styleLeft = {
+    marginTop: "120px"
+  }
+
+  const styleHeader = {
+    textAlign: "center"
+  }
+
+  const styleBtn = {
+    marginTop: "40px",
+    marginLeft: "360px"
+  }
+  
+  const styleScoreBoard = {
+    display: "flex",
+    margin: "20px"
   }
 
   let btnCount = 0;
@@ -138,7 +155,7 @@ const Game = () => {
 
       if (menacePlay) {
       
-        let menaceBoardUpdate = play_menace();                        
+        let menaceBoardUpdate = await play_menace();                        
         let newArr = [...menaceBoardUpdate];
         replaceXnO(newArr)
         // console.log("MEANCE PLAYS", newArr);
@@ -171,7 +188,7 @@ const Game = () => {
         }         
       } 
       else if (opponentPlay) {       
-        let opponentBoardUpdate = play_opponent();
+        let opponentBoardUpdate = await play_opponent();
         let newArr = [...opponentBoardUpdate];
         replaceXnO(newArr);             
         await setBoard(newArr)  
@@ -214,24 +231,25 @@ const Game = () => {
 
   return (
 
-    <div style={style}>
-      <Board squares={board} onClick={handleClick} />
-      <div>
-        {/* <p>
-          {winner ? "Winner: " + (winner === "O" ? "MENACE wins" : "Human wins") : "Next Player: " + (xIsNext ? "O" : "X")}
-        </p> */}
-      </div>
-      <button onClick={triggerHuman}>Human</button>
-      <button onClick={triggerRandom}>Random</button>
-      <div style={{display: "flex"}}>
-        <div>
-          <p>Total Games {gameCounter}</p>
-          <p>Menace Wins {wins}</p>
-          <p>Human Wins {loss}</p>
-          <p>Draw {draw}</p>
-        </div>       
-        <Trends customCount={custom} />
-      </div>
+    <div>
+      <h1 style={styleHeader}>The MENACE</h1>
+      <Grid container spacing={2}>
+        <Grid item xs={7} style={styleLeft}>          
+          <Board squares={board} onClick={handleClick} /> 
+          <Button variant="outlined" onClick={triggerRandom} style={styleBtn}>Random</Button>    
+        </Grid>
+        <Grid item xs={5}>     
+          <div style={styleScoreBoard}>
+            <p style={{padding: "10px"}}>Total Games {gameCounter}</p>
+            <p style={{padding: "10px"}}>Menace Wins {wins}</p>
+            <p style={{padding: "10px"}}>Human Wins {loss}</p>
+            <p style={{padding: "10px"}}>Draw {draw}</p>     
+          </div>     
+          <div>                   
+            <Trends customCount={custom} />
+          </div>
+        </Grid>        
+      </Grid>
     </div>
   )
 }
