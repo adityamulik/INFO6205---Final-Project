@@ -29,7 +29,6 @@ Just open the browser console (Command + Option + J for Mac & Control + Shift + 
 
 ### Testing:
 How to perform tests?
-
 Steps:
 * Open terminal on your system
 * Change Directory, type _cd INFO6205---Final-Project---TicTacToe_.
