@@ -1,77 +1,143 @@
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import Game from '../components/Game'; 
 
+
+// Testcases for running 1000, 2500, 5000, 8000 and 10000 sample testcases to show the learning by reinforcement 
 test('total games 1000', () => {
   render(<Game />);
-  const randomBtn = screen.getByTestId('random-btn');
-  const games = screen.getByTestId('total');
+  const resetBtn = screen.getByTestId('reset'); // This will get the reset menace buttom
+  const randomBtn = screen.getByTestId('random-btn'); // This will get the random buttom
+  const totalGames = screen.getByTestId('total'); // This will get the total value of games played
+  const wins = screen.getByTestId('wins'); // This will get the total wins of MENACE
+  const loss = screen.getByTestId('loss'); // This will get the total loss of MENACE
+
+  fireEvent.click(resetBtn); // Resets the menace
+
+  // Assertions that the values are available in the document
   expect(randomBtn).toBeInTheDocument();
-  expect(games).toBeInTheDocument();
+  expect(totalGames).toBeInTheDocument();
+  expect(wins).toBeInTheDocument();
+  expect(loss).toBeInTheDocument();  
  
-  expect(games).toHaveTextContent('Total Games 0');
+  // Assertion to check if the initial count of total games is 0
+  expect(totalGames).toHaveTextContent('0');
+
+  // Looping over games
   for (let i=0; i<1000; i++) {
-    setTimeout(() => {}, 1000);
+    // Random button fired for n no of games
     fireEvent.click(randomBtn);
   }  
-  expect(games).toHaveTextContent('Total Games 1000');
+  // Assertion to check if the total number of games is equal to n
+  expect(totalGames).toHaveTextContent('1000');
+  // Logic  - Training probability calculation (when menace wins)
+  let probability = 1 - (loss.textContent/ wins.textContent);
+
+  //Ratio above 1 is round of to One 
+  expect(probability).toBeLessThanOrEqual(1);
+})
+
+test('total games 2500', () => {
+  render(<Game />);
+  const resetBtn = screen.getByTestId('reset');
+  const randomBtn = screen.getByTestId('random-btn');
+  const totalGames = screen.getByTestId('total');
+  const wins = screen.getByTestId('wins');
+  const loss = screen.getByTestId('loss');
+
+  fireEvent.click(resetBtn);
+
+  expect(randomBtn).toBeInTheDocument();
+  expect(totalGames).toBeInTheDocument();
+  expect(wins).toBeInTheDocument();
+  expect(loss).toBeInTheDocument();  
+ 
+  expect(totalGames).toHaveTextContent('0');
+  for (let i=0; i<2500; i++) {
+    fireEvent.click(randomBtn); 
+  }  
+  expect(totalGames).toHaveTextContent('2500');
+
+  let probability = 1 - (loss.textContent/ wins.textContent);
+
+  console.log(probability);
+
+  expect(probability).toBeLessThanOrEqual(1);
 })
 
 test('total games 5000', () => {
   render(<Game />);
+  const resetBtn = screen.getByTestId('reset');
   const randomBtn = screen.getByTestId('random-btn');
-  const games = screen.getByTestId('total');
+  const totalGames = screen.getByTestId('total');
+  const wins = screen.getByTestId('wins');
+  const loss = screen.getByTestId('loss');
+
+  fireEvent.click(resetBtn);
+
   expect(randomBtn).toBeInTheDocument();
-  expect(games).toBeInTheDocument();
+  expect(totalGames).toBeInTheDocument();
+  expect(wins).toBeInTheDocument();
+  expect(loss).toBeInTheDocument();  
  
-  expect(games).toHaveTextContent('Total Games 0');
+  expect(totalGames).toHaveTextContent('0');
   for (let i=0; i<5000; i++) {
-    setTimeout(() => {}, 1000);
     fireEvent.click(randomBtn);
   }  
-  expect(games).toHaveTextContent('Total Games 5000');
+  expect(totalGames).toHaveTextContent('5000');
+
+  let probability = 1 - (loss.textContent/ wins.textContent);
+
+  expect(probability).toBeLessThanOrEqual(1);
+})
+
+test('total games 8000', () => {
+  render(<Game />);
+  const resetBtn = screen.getByTestId('reset');
+  const randomBtn = screen.getByTestId('random-btn');
+  const totalGames = screen.getByTestId('total');
+  const wins = screen.getByTestId('wins');
+  const loss = screen.getByTestId('loss');
+
+  fireEvent.click(resetBtn);
+
+  expect(randomBtn).toBeInTheDocument();
+  expect(totalGames).toBeInTheDocument();
+  expect(wins).toBeInTheDocument();
+  expect(loss).toBeInTheDocument();  
+ 
+  expect(totalGames).toHaveTextContent('0');
+  for (let i=0; i<8000; i++) {
+    fireEvent.click(randomBtn);
+  }  
+  expect(totalGames).toHaveTextContent('8000');
+
+  let probability = 1 - (loss.textContent/ wins.textContent);
+
+  expect(probability).toBeLessThanOrEqual(1);
 })
 
 test('total games 10000', () => {
   render(<Game />);
+  const resetBtn = screen.getByTestId('reset');
   const randomBtn = screen.getByTestId('random-btn');
-  const games = screen.getByTestId('total');
+  const totalGames = screen.getByTestId('total');
+  const wins = screen.getByTestId('wins');
+  const loss = screen.getByTestId('loss');
+
+  fireEvent.click(resetBtn);
+
   expect(randomBtn).toBeInTheDocument();
-  expect(games).toBeInTheDocument();
+  expect(totalGames).toBeInTheDocument();
+  expect(wins).toBeInTheDocument();
+  expect(loss).toBeInTheDocument();  
  
-  expect(games).toHaveTextContent('Total Games 0');
+  expect(totalGames).toHaveTextContent('0');
   for (let i=0; i<10000; i++) {
-    setTimeout(() => {}, 1000);
     fireEvent.click(randomBtn);
   }  
-  expect(games).toHaveTextContent('Total Games 10000');
-})
+  expect(totalGames).toHaveTextContent('10000');
 
-test('total games 15000', () => {
-  render(<Game />);
-  const randomBtn = screen.getByTestId('random-btn');
-  const games = screen.getByTestId('total');
-  expect(randomBtn).toBeInTheDocument();
-  expect(games).toBeInTheDocument();
- 
-  expect(games).toHaveTextContent('Total Games 0');
-  for (let i=0; i<15000; i++) {
-    setTimeout(() => {}, 1000);
-    fireEvent.click(randomBtn);
-  }  
-  expect(games).toHaveTextContent('Total Games 15000');
-})
+  let probability = 1 - (loss.textContent/ wins.textContent);
 
-test('total games 20000', () => {
-  render(<Game />);
-  const randomBtn = screen.getByTestId('random-btn');
-  const games = screen.getByTestId('total');
-  expect(randomBtn).toBeInTheDocument();
-  expect(games).toBeInTheDocument();
- 
-  expect(games).toHaveTextContent('Total Games 0');
-  for (let i=0; i<20000; i++) {
-    setTimeout(() => {}, 1000);
-    fireEvent.click(randomBtn);
-  }  
-  expect(games).toHaveTextContent('Total Games 20000');
+  expect(probability).toBeLessThanOrEqual(1);
 })

@@ -240,13 +240,18 @@ const Game = () => {
         </Grid>
         <Grid item xs={5}>     
           <div style={styleScoreBoard}>
-            <p style={{padding: "10px"}} data-testid="total">Total Games {gameCounter}</p>
-            <p style={{padding: "10px"}} data-testid="wins">Menace Wins {wins}</p>
-            <p style={{padding: "10px"}}>Human Wins {loss}</p>
-            <p style={{padding: "10px"}}>Draw {draw}</p>     
+            <p style={{padding: "10px"}}>Total Games: </p>
+            <p data-testid="total">{gameCounter}</p>
+            <p style={{padding: "10px"}} >Menace Wins: </p>
+            <p data-testid="wins">{wins}</p>
+            <p style={{padding: "10px"}}>Human Wins: </p>
+            <p data-testid="loss">{loss}</p>
+            <p style={{padding: "10px"}}>Draw: </p>     
+            <p>{draw}</p>
           </div>     
           <div>                   
             <Trends customCount={custom} />
+            <button onClick={reset_menace} disabled data-testid="reset"/>
           </div>
         </Grid>        
       </Grid>
