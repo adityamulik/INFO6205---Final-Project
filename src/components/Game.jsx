@@ -107,7 +107,7 @@ const Game = () => {
       // console.log("Board new menace", boardCopyMenace);
   };    
 
-  const triggerHuman = async () => {
+  const triggerHuman = () => {
 
     if (!resetMenaceHumanBool) {
       const boardNew = reset_menace("both");
@@ -135,7 +135,7 @@ const Game = () => {
     }
   }
 
-  const triggerRandom = async () => {
+  const triggerRandom = () => {
 
     if (!meanceResetBool) {
       const boardNew = reset_menace("both");
@@ -155,12 +155,12 @@ const Game = () => {
 
       if (menacePlay) {
       
-        let menaceBoardUpdate = await play_menace();                        
+        let menaceBoardUpdate = play_menace();                        
         let newArr = [...menaceBoardUpdate];
         replaceXnO(newArr)
         // console.log("MEANCE PLAYS", newArr);
                      
-        await setBoard(newArr);
+        setBoard(newArr);
         menacePlay = false;
         opponentPlay = true;
 
@@ -188,10 +188,10 @@ const Game = () => {
         }         
       } 
       else if (opponentPlay) {       
-        let opponentBoardUpdate = await play_opponent();
+        let opponentBoardUpdate = play_opponent();
         let newArr = [...opponentBoardUpdate];
         replaceXnO(newArr);             
-        await setBoard(newArr)  
+        setBoard(newArr)  
         
         menacePlay = true;
         opponentPlay = false;
@@ -236,12 +236,12 @@ const Game = () => {
       <Grid container spacing={2}>
         <Grid item xs={7} style={styleLeft}>          
           <Board squares={board} onClick={handleClick} /> 
-          <Button variant="outlined" onClick={triggerRandom} style={styleBtn}>Random</Button>    
+          <Button variant="outlined" onClick={triggerRandom} style={styleBtn} data-testid="random-btn">Random</Button>    
         </Grid>
         <Grid item xs={5}>     
           <div style={styleScoreBoard}>
-            <p style={{padding: "10px"}}>Total Games {gameCounter}</p>
-            <p style={{padding: "10px"}}>Menace Wins {wins}</p>
+            <p style={{padding: "10px"}} data-testid="total">Total Games {gameCounter}</p>
+            <p style={{padding: "10px"}} data-testid="wins">Menace Wins {wins}</p>
             <p style={{padding: "10px"}}>Human Wins {loss}</p>
             <p style={{padding: "10px"}}>Draw {draw}</p>     
           </div>     
