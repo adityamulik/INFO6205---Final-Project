@@ -4,12 +4,7 @@ import { LineChart, Line, XAxis, YAxis } from 'recharts';
 const Trends = ({customCount}) => {
 
   useEffect(() => {
-    // console.log(customCount);
-
-    // for (let i=0; i<customCount.length; i++) {
-    //   // console.log(customCount[i]);
-    //   data.push([{name: customCount[i][0], uv: customCount[i][1], pv: 2400, amt: 2400}]);
-    // }
+    
   }, []);
 
 

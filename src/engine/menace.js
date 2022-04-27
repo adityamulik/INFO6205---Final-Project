@@ -22,16 +22,7 @@ export let menace = {
  
  // what is player 2?
  let player = 'h'
-//  document.getElementById("p2picker").value = "h"
-//  document.getElementById("speeddiv").style.display = "none"
  let whoA = {"h":"Human", "r":"Random", "m":"MENACE2", "p":"Perfect"}
- 
- // plotting
- let plotdata = [0]
- let xmin = 0
- let xmax = 0
- let ymin = 0
- let ymax = 0
  
  // game data
  let playagain = true
@@ -117,11 +108,7 @@ export const new_game = () => {
       menace[1]["moves"] = []
       menace[2]["moves"] = []
       board = [0,0,0,0,0,0,0,0,0]
-      no_winner = true
-      // for(var i=0;i<9;i++){
-      //     document.getElementById("pos"+i).innerHTML = "<form onsubmit='javascript:play_human("+i+");return false'><input type='submit' value=' '></form>"
-      // }
-      // play_menace();      
+      no_winner = true 
   }    
   return board;
 }
@@ -154,50 +141,26 @@ export const check_win = () =>{
         console.log(`INFO: It's a draw at ${new Date()}`);
         message.push(0);
         message.push(true);
-        // return board;
       }
       if(who_wins == 1){
         console.log(`INFO: MEANCE won at ${new Date()}`);
         message.push(1);
         message.push(true);
-        // return board;
       }
       if(who_wins == 2){
         console.log(`INFO: MEANCE lost & Opponent won at ${new Date()}`);
         message.push(2);
         message.push(true);
-        // return board;
       }
       do_win(who_wins)
-      // human_turn = false
       return message;
   } else {
-    // console.log("Not won yet");
-    // return board;
     return false;
   }
 }
 
 const do_win = (who_wins) => {
-  // no_winner = false
-  // for(var i=0;i<9;i++){
-  //     if(board[i] == 0){
-  //         document.getElementById("pos"+i).innerHTML = ""
-  //     }
-  // }
-  // console.log("Adding new beads");
-  // console.log(who_wins);
   menace_add_beads(who_wins)
-  // if(player == "h"){
-      // window.setTimeout(new_game, 1000);
-  // } else {
-      // window.setTimeout(() => { new_game() }, 5000);
-  // }
-  // new_game();
-
-  // setTimeout(() => {
-  //   new_game();
-  // }, 10000);
 }
 
 export const play_menace = () => {
@@ -210,23 +173,11 @@ export const play_menace = () => {
   setTimeout(() => {}, 2000);
 
   return board;
-
-  // getMenaceMove(board);
-
-  // Return board state
-  // updateBoard();
-
-  // check_win();
-
-  // if(no_winner){
-  //   play_opponent();
-  // }
 };
 
 export const play_opponent = () => {
   let where = undefined;
-  // Human
-  
+
   // Random
   human_turn = false
   where = get_random_move();
@@ -241,26 +192,12 @@ export const play_opponent = () => {
   setTimeout(() => {}, 2000);
 
   return board;
-
-  // Return board state
-  // updateBoard();
-
-  // check_win();
-
-  // if(no_winner){
-  //   play_menace();
-  // }
 };
 
 export const play_human = (where) => {
   if(no_winner){
       human_turn = false
-      board[where] = 2
-      // document.getElementById("pos"+where).innerHTML = pieces[2]
-      // check_win()
-      // if(no_winner){
-      //     play_menace()
-      // }
+      board[where] = 2;
   }
   return board;
 }
@@ -342,7 +279,6 @@ const get_random_move = () => {
 }
 
 export function get_perfect_move(){
-
   return minimax(board,2).index;
 }
 
@@ -462,7 +398,6 @@ const get_menace_move = (n) => {
       var plays = menace[n]["boxes"][pos]
       var where = make_move(plays)
       if(where == "resign"){return "resign"}
-      // document.getElementById(pos+"-"+where).style.color = "#FF0000"
       var inv_where = rotations[which_rot][where]
       menace[n]["moves"].push([pos,where])
   }
@@ -471,7 +406,6 @@ const get_menace_move = (n) => {
 
 function box_add(pos,move,change,n){
   menace[n]["boxes"][pos][move] = Math.max(0,change+menace[n]["boxes"][pos][move])
-  // update_box(pos,n)
 }
 
 
@@ -489,10 +423,7 @@ function menace_add_beads(result){
 
 // UI functions
 function update_totals(n){
-  // plotdata.push(plotdata[plotdata.length-1]+menace[1]["incentives"][n])
-  wins_each[n] += 1
-  // document.getElementById("dis"+n).innerHTML = wins_each[n]
-  // update_plot()
+  wins_each[n] += 1;
 }
 
 // Game Reset and new game
@@ -507,13 +438,6 @@ export const reset_menace = (n) => {
       }
   }
   if(n == 1 || n == "both"){
-      // plotdata = [0]
-      // update_plot()
-      // redraw_plot()
-      // wins_each = [0,0,0]
-      // for (let i=0;i<3;i++) {
-      //     document.getElementById("dis"+i).innerHTML = wins_each[i]
-      // }
 
       add_box("000000000",1,0);
   }
@@ -525,10 +449,7 @@ export const reset_menace = (n) => {
           order_boxes(i)
       }
   }
-  // show_menace(1)
-  // if(player=="m"){
-  //     show_menace(2)
-  // }
+  
   new_game();
 
   return board;
