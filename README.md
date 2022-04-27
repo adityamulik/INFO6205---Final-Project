@@ -1,5 +1,7 @@
 # INFO6205---Final-Project<br> MENACE - Matchbox Educable Noughts and Crosses Engine
 
+Built using ReactJS, VanillaJS & Jest for testing
+
 ## Installation Instructions
 
 ### Requirements:
@@ -25,8 +27,15 @@
 How to check logs?
 Just open the browser console (Command + Option + J for Mac & Control + Shift + I for Windows)
 
+### Testing:
+How to perform tests?
 
->Project built under the mentorship of **_Professor Robin Hillyards_** in the class INFO6205 - Program, Structures & Algorithms taught in **College of Engineering, Northeastern University**.
+Steps:
+* Open terminal on your system
+* Change Directory, type _cd INFO6205---Final-Project---TicTacToe_.
+* Type _npm run test_.
+
+>Project built under the mentorship of **_Professor Robin Hillyard_** in the class INFO6205 - Program, Structures & Algorithms taught in **College of Engineering, Northeastern University**.
 
 ## Team Members
 
