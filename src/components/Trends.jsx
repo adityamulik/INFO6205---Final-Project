@@ -13,7 +13,7 @@ const Trends = ({customCount}) => {
       <Line type="monotone" dataKey="uv" stroke="#8884d8" />
       <br></br>
       <XAxis dataKey="name" label={{ value: 'No. of Games', angle: 0, dy: 13}}/>
-      <YAxis label={{ value: 'Beads Count', angle: -90, position: 'insideLeft' }}/>
+      <YAxis label={{ value: 'Beads Count', angle: -90, position: 'insideLeft', dx: 25 }}/>
     </LineChart>
   )
 }
