@@ -201,7 +201,7 @@ const Game = () => {
               <ul>
                 <li>Every win by MENACE is awarded with 3 beads (+3)</li>
                 <li>Every draw by MENACE is awarded with 1 bead (+1)</li>
-                <li>Every loss by MENACE is punished with 1 beads (-1)</li>
+                <li>Every loss by MENACE is punished with 1 bead (-1)</li>
               </ul>              
             </Typography>
           </div>
