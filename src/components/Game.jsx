@@ -9,6 +9,7 @@ import Trends from './Trends';
 
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 const Game = () => {
 
@@ -58,11 +59,11 @@ const Game = () => {
 
   }, [board]);
 
-  const handleClick = (i) => {
-      const boardCopy = [...board];
-      boardCopy[i] = 2;
-      play_menace();
-  };    
+  // const handleClick = (i) => {
+  //     const boardCopy = [...board];
+  //     boardCopy[i] = 2;
+  //     play_menace();
+  // };    
 
   const triggerHuman = () => {
 
@@ -171,8 +172,16 @@ const Game = () => {
       <h1 style={styleHeader}>The MENACE</h1>
       <Grid container spacing={2}>
         <Grid item xs={7} style={styleLeft}>          
-          <Board squares={board} onClick={handleClick} /> 
+          <Board squares={board} /> 
           <Button variant="outlined" onClick={triggerRandom} style={styleBtn} data-testid="random-btn">Random</Button>    
+          <div style={{textAlign: "center", margin: "49px"}}>
+            <Typography variant="h6" gutterBottom component="div">
+              Menace: O
+            </Typography>
+            <Typography variant="h6" gutterBottom component="div">
+              Opponent: X
+            </Typography>
+          </div>
         </Grid>
         <Grid item xs={5}>     
           <div style={styleScoreBoard}>
@@ -185,9 +194,16 @@ const Game = () => {
             <p style={{padding: "10px"}}>Draw: </p>     
             <p>{draw}</p>
           </div>     
+          
           <div>                   
             <Trends customCount={custom} />
-            <button onClick={reset_menace} disabled data-testid="reset"/>
+            <Typography variant="subtitle1" gutterBottom component="div">
+              <ul>
+                <li>Every win by MENACE is awarded with 3 beads (+3)</li>
+                <li>Every draw by MENACE is awarded with 1 bead (+1)</li>
+                <li>Every loss by MENACE is punished with 1 beads (-1)</li>
+              </ul>              
+            </Typography>
           </div>
         </Grid>        
       </Grid>

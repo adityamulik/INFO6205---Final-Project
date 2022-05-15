@@ -11,8 +11,9 @@ const Trends = ({customCount}) => {
   return (
     <LineChart width={400} height={400} data={customCount}>
       <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-      <XAxis dataKey="name" />
-      <YAxis />
+      <br></br>
+      <XAxis dataKey="name" label={{ value: 'No. of Games', angle: 0, dy: 13}}/>
+      <YAxis label={{ value: 'Beads Count', angle: -90, position: 'insideLeft' }}/>
     </LineChart>
   )
 }

@@ -7,12 +7,11 @@ const Square = ({value, onClick}) => {
     border: "2px solid darkblue",
     fontSize: "30px",
     fontWeight: "800",
-    cursor: "pointer",
     outline: "none",
   };
 
   return (
-      <button style={style} onClick={onClick}>
+      <button style={style}>
         {value}
       </button>
   )
